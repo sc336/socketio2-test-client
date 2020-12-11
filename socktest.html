@@ -1,0 +1,29 @@
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js" crossorigin="anonymous"></script>
+  <script>
+  const socket = io.connect('http://' + document.domain + ':' + location.port + '/');
+  function dlog(etype, msg) {
+    $('#received').append(etype + ":" + msg + "<br />");
+    }
+  const eventList = ['connect', 'debug', 'disconnect'];
+  eventList.forEach(eventName =>
+    socket.on(eventName, function(msg) {
+      dlog(eventName, msg);
+      })
+    );
+  /*
+  socket.on('connection', (socket) => {
+    socket.use((packet, next) => {
+      alert(packet);
+      next();
+    });
+  });
+  */
+  </script>
+
+<input type="text" id="eventType"></input>
+<input type="text" id="msg"></input>
+<input type="button" id="send" onclick="socket.emit($('#eventType').val(), $('#msg').val());">Send</input>
+<br />
+<div id="received"></div>
