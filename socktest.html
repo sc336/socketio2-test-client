@@ -24,6 +24,7 @@
 
 <input type="text" id="eventType"></input>
 <input type="text" id="msg"></input>
-<input type="button" id="send" onclick="socket.emit($('#eventType').val(), $('#msg').val());">Send</input>
+<button type="button" id="send" onclick="socket.emit($('#eventType').val(), $('#msg').val());">Send</button>
+<button type="button" id="sendJSON" onclick="socket.emit($('#eventType').val(), JSON.parse($('#msg').val()));">Send as JSON</button>
 <br />
 <div id="received"></div>
