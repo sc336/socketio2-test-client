@@ -4,9 +4,13 @@
   <script>
   const socket = io.connect('http://' + document.domain + ':' + location.port + '/');
   function dlog(etype, msg) {
+    if(typeof msg != typeof "")
+      msg = JSON.stringify(msg);
     $('#received').append(etype + ":" + msg + "<br />");
     }
-  const eventList = ['connect', 'debug', 'disconnect'];
+  {% autoescape false %}
+  const eventList = {{ eventList|default(["connect", "disconnect", "debug", "update"], true) }};
+  {% endautoescape %}
   eventList.forEach(eventName =>
     socket.on(eventName, function(msg) {
       dlog(eventName, msg);
